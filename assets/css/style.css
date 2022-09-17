@@ -49,6 +49,15 @@ p{
     height: 90vh;
 }
 
+.container2{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 90vh;
+}
+
 .btn-start{
     display: flex;
     justify-content: center;
