@@ -8,7 +8,6 @@
 }
 header {
     background-color: var(--purpleTheme);
-
 }
 
 nav{
@@ -26,3 +25,37 @@ nav{
     margin-left: 15px;
     background-color: var(--purpleButtons);
 }
+
+#logo-header{
+    margin-right: 40px;
+}
+
+h1{
+    font-size: 30px;
+    align-items: center;
+}
+
+p{
+    font-size: 18px;
+    align-items: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 90vh;
+}
+
+.btn-start{
+    display: flex;
+    justify-content: center;
+    order: 2;
+}
+
+.container > * {
+    padding: 10px;
+}
+
