@@ -1,10 +1,10 @@
 let mainClose = document.querySelector('.container-start');
 let quizOpen = document.querySelector('.container-quiz')
-let executeQuiz = document.querySelector(".btn-start");
 let answerButtons = document.querySelectorAll(".answer");
 let questionPrompt = document.querySelector("#question")
 let sortedDictionary;
 let sortedDictionaryIndex = 0;
+let timeStart;
 
 let answerAlert = document.querySelector("#alert");
 // ------------------------------
@@ -12,12 +12,16 @@ let mainScreen = function () {
     let mainPrompt = document.querySelector('.container-start');
     let gameIntro = document.createElement("h2");
     let infoTag = document.createElement("p");
+    let startQuiz = document.createElement("button");
 
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
     infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 3 seconds from the clock. every 5 seconds passed is minus 1 point ";
+    startQuiz.textContent ="Start Quiz";
+    startQuiz.classList.add('btn-start')
 
     mainPrompt.appendChild(gameIntro);
     mainPrompt.appendChild(infoTag);
+    mainPrompt.appendChild(startQuiz);
 
     for (let i = 0; i < 2; i++) {
         mainPrompt.children[i].setAttribute("style", "margin: 20px;")
@@ -28,8 +32,11 @@ let timerEl = document.getElementById('timer');
 let removePH = document.getElementById('remove-time');
 
 function countdown() {
-    let timeStart = 60;
+    let timeStart=60;
     let timeSeconds = document.createElement("h4");
+
+    timeSeconds.classList.add('seconds');
+
     timerEl.appendChild(timeSeconds);
 
     let startTimer = setInterval(function() {
@@ -42,6 +49,13 @@ function countdown() {
             timeSeconds.textContent = '0 sec';
             clearInterval(startTimer);
         }
+        else if (sortedDictionaryIndex === questionsDictionary.length) {
+            timeSeconds.textContent = timeStart;
+            clearInterval(startTimer);
+            let timerResult = document.querySelector(".seconds")
+            console.log(timerResult.innerText);
+        }
+        
     }, 1000);
 }
 
@@ -49,13 +63,16 @@ function countdown() {
 
 mainScreen();
 
+let executeQuiz = document.querySelector(".btn-start");
+
 executeQuiz.addEventListener("click", function() {
     mainClose.style.display = 'none';
     quizOpen.style.display = 'flex';
     countdown();
     loadFirstQuestion();
 });
-    
+
+// ---------------------------------
 function loadFirstQuestion () {
     sortedDictionary = questionsDictionary.sort(function(){return 0.5 - Math.random()});
     questionPrompt.innerText = sortedDictionary[sortedDictionaryIndex].question;
@@ -67,6 +84,8 @@ function loadFirstQuestion () {
     btnTags.forEach(item => {item.addEventListener('click',selectAnswer)})
 }
 
+// ---------------------------------
+
 function loadOtherQuestions () {
     questionPrompt.innerText = sortedDictionary[sortedDictionaryIndex].question;
     console.log(sortedDictionaryIndex);
@@ -77,6 +96,8 @@ function loadOtherQuestions () {
     }
     btnTags.forEach(item => {item.addEventListener('click',selectAnswer)})
 }
+
+//------------------------------------
 
 function selectAnswer (event) {
     let selectedButton = event.target;
@@ -92,10 +113,20 @@ function selectAnswer (event) {
     if(sortedDictionaryIndex === questionsDictionary.length) {
         enterHighScore();
     }
-    loadOtherQuestions();
+    if (sortedDictionaryIndex < questionsDictionary.length) {
+        loadOtherQuestions();
+    }
 }
 
-function enterHighScore () {
+function enterHighScore () {    
+    let gameIntro = document.querySelector("h2");
+    let infoTag = document.querySelector("p");
+    let quizOpen = document.querySelector(".btn-start")
+    
+    mainClose.removeChild(gameIntro);
+    mainClose.removeChild(infoTag);
+    mainClose.removeChild(quizOpen);
+    // ----------- keep above
     let gameOutro = document.createElement("h2");
     let goodBye = document.createElement("p");
     gameOutro.textContent = "Thanks for playing!";
@@ -106,6 +137,7 @@ function enterHighScore () {
 
     mainClose.appendChild(gameOutro);
     mainClose.appendChild(goodBye);
+
 }
 
 
