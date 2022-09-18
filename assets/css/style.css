@@ -61,8 +61,9 @@ p{
 
 .container-quiz button {
     margin: 5px 40px ;
-    border: 1px black;
     padding: 10px 5px ;
+    cursor: pointer;
+    background-color: var(--purpleButtons);
 }
 
 .container-start{
@@ -76,12 +77,15 @@ p{
 }
 
 .btn-start{
-    display: flex;
-    justify-content: center;
+    padding: 20px 40px;
     order: 2;
+    cursor: pointer;
+    background-color: var(--purpleButtons);
+    font-size: 20px;
 }
 
-.container > * {
-    padding: 10px;
-}
-
+@media screen and (max-width: 768px) {
+    .container-quiz{
+        margin: 5px;
+    }
+} 

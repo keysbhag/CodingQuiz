@@ -14,17 +14,45 @@ let mainScreen = function () {
     }
 }
 
-mainScreen();
+let timerEl = document.getElementById('timer');
+let removePH = document.getElementById('remove-time');
+
+function countdown() {
+    let timeStart = 60;
+    let timeSeconds = document.createElement("h4");
+    timerEl.appendChild(timeSeconds);
+
+    let startTimer = setInterval(function() {
+        if (timeStart === 60) {
+            timerEl.removeChild(removePH);
+        }
+        timeStart--;
+        timeSeconds.textContent = timeStart+" sec";
+        if (timeStart < 0 ){
+            timeSeconds.textContent = '0 sec';
+            clearInterval(startTimer);
+        }
+    }, 1000);
+}
 
 let mainClose = document.querySelector('.container-start');
 let quizOpen = document.querySelector('.container-quiz')
 let executeQuiz = document.querySelector(".btn-start");
 
+mainScreen();
+
 executeQuiz.addEventListener("click", function() {
     mainClose.style.display = 'none';
+    countdown();
     quizOpen.style.display = 'flex';
+    loadFirstQuestion();
+
 
 });
+
+let loadFirstQuestion = function () {
+    
+}
 
 
 
