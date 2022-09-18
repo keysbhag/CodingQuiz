@@ -6,6 +6,7 @@ let questionPrompt = document.querySelector("#question")
 let sortedDictionary;
 let sortedDictionaryIndex = 0;
 
+let answerAlert = document.querySelector("#alert");
 // ------------------------------
 let mainScreen = function () {
     let mainPrompt = document.querySelector('.container-start');
@@ -62,58 +63,87 @@ function loadFirstQuestion () {
     for (let i = 0; i < 4; i++) {
         btnTags[i].innerText = sortedDictionary[sortedDictionaryIndex].answers[i]["text"];
         btnTags[i].value = sortedDictionary[sortedDictionaryIndex].answers[i]["status"];
-    } 
+    }
+    btnTags.forEach(item => {item.addEventListener('click',selectAnswer)})
 }
 
 function loadOtherQuestions () {
-
+    questionPrompt.innerText = sortedDictionary[sortedDictionaryIndex].question;
+    console.log(sortedDictionaryIndex);
+    let btnTags = document.querySelectorAll(".answer");
+    for (let i = 0; i < 4; i++) {
+        btnTags[i].innerText = sortedDictionary[sortedDictionaryIndex].answers[i]["text"];
+        btnTags[i].value = sortedDictionary[sortedDictionaryIndex].answers[i]["status"];
+    }
+    btnTags.forEach(item => {item.addEventListener('click',selectAnswer)})
 }
 
 function selectAnswer (event) {
-    let btnTags = documentQuerySelectorAll(".answer");
     let selectedButton = event.target;
-    for (let i = 0; i < 4; i++) {
-        if 
+    console.log(selectedButton);
+    if (selectedButton.value === "1"){
+        answerAlert.innerText = "Correct";
+        answerAlert.style.backgroundColor="lightgreen";
+    } else {
+        answerAlert.innerText = "Incorrect";
+        answerAlert.style.backgroundColor="crimson";
     }
+    sortedDictionaryIndex ++;
+    if(sortedDictionaryIndex === questionsDictionary.length) {
+        enterHighScore();
+    }
+    loadOtherQuestions();
+}
 
+function enterHighScore () {
+    let gameOutro = document.createElement("h2");
+    let goodBye = document.createElement("p");
+    gameOutro.textContent = "Thanks for playing!";
+    goodBye.textContent = "See you next time ";
+
+    quizOpen.style.display = 'none';
+    mainClose.style.display = 'flex';
+
+    mainClose.appendChild(gameOutro);
+    mainClose.appendChild(goodBye);
 }
 
 
 let questionsDictionary = [
     {
-        question: 'What is 2 + 2?',
+        question: 'Why did the chicken cross the road?',
         answers: [
-          { text: '4', status: 1 },
-          { text: '22', status: 0 },
-          { text: '22', status: 0 },
-          { text: '22', status: 0 }
+          { text: 'to get to the other side', status: 1 },
+          { text: 'to dance', status: 0 },
+          { text: 'to invest in crypto', status: 0 },
+          { text: 'to buy grapes', status: 0 }
         ]
       },
       {
-        question: 'Who is the best YouTuber?',
+        question: 'What is the most important syntax?',
         answers: [
-          { text: 'Web Dev Simplified', status: 0 },
-          { text: 'Traversy Media', status: 0 },
-          { text: 'Dev Ed', status: 1 },
-          { text: 'Fun Fun Function', status: 0 }
+          { text: 'semi-colon ;', status: 1 },
+          { text: 'variable', status: 0 },
+          { text: 'beep bop', status: 0 },
+          { text: 'if statement', status: 0 }
         ]
       },
       {
-        question: 'Is web development fun?',
+        question: 'Whats the best programming language?',
         answers: [
-          { text: 'Kinda', status: 0 },
-          { text: 'YES!!!', status: 0 },
-          { text: 'Um no', status: 0 },
-          { text: 'IDK', status: 1 }
+          { text: ' C ', status: 0 },
+          { text: 'Python', status: 0 },
+          { text: 'Java', status: 0 },
+          { text: 'JavaScript', status: 1 }
         ]
       },
       {
-        question: 'What is 4 * 2?',
+        question: 'What is the language that makes pages beautiful',
         answers: [
-          { text: '6', status: 0 },
-          { text: '8', status: 1 },
-          { text: '8', status: 1 },
-          { text: '8', status: 1 }
+          { text: 'Flask', status: 0 },
+          { text: 'HTML', status: 0 },
+          { text: 'CSS', status: 1 },
+          { text: 'Door Dash', status: 0 }
         ]
       }
     ]
