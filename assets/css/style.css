@@ -31,6 +31,11 @@ nav{
 }
 
 h1{
+    font-size: 35px;
+    align-items: center;
+}
+
+h2{
     font-size: 30px;
     align-items: center;
 }
@@ -40,22 +45,34 @@ p{
     align-items: center;
 }
 
-.container{
+.container-quiz{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    height: 90vh;
+    margin-left: 200px;
+    margin-right: 200px;
+
+}
+
+.container-quiz > * {
+    margin-bottom: 10px;
+}
+
+.container-quiz button {
+    margin: 5px 40px ;
+    border: 1px black;
+    padding: 10px 5px ;
+}
+
+.container-start{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100vw;
+    margin: 0px 30px;
     height: 90vh;
-}
-
-.container2{
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 90vh;
+    text-align: center;
 }
 
 .btn-start{

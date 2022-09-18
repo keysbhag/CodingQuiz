@@ -1,42 +1,28 @@
 let mainScreen = function () {
-    let mainPrompt = document.querySelector('.container');
-    let gameIntro = document.createElement("h1");
+    let mainPrompt = document.querySelector('.container-start');
+    let gameIntro = document.createElement("h2");
     let infoTag = document.createElement("p");
-    // let startQuiz = document.createElement("button");
 
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
-    infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. every 5 seconds passed is minus 1 point ";
-    // startQuiz.textContent ="Start Quiz";
+    infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 3 seconds from the clock. every 5 seconds passed is minus 1 point ";
 
     mainPrompt.appendChild(gameIntro);
     mainPrompt.appendChild(infoTag);
-    // mainPrompt.appendChild(startQuiz);
 
     for (let i = 0; i < 2; i++) {
-        mainPrompt.children[i].setAttribute("style", "margin: 10px;")
+        mainPrompt.children[i].setAttribute("style", "margin: 20px;")
     }
-}
-
-let trollScreen = function () {
-    let mainPrompt = document.querySelector('.container2');
-    let trollIntro = document.createElement("h1");
-
-    trollIntro.textContent = "HAHA Just Trolling 🤪";
-
-    mainPrompt.appendChild(trollIntro)
 }
 
 mainScreen();
 
-trollScreen();
-
-let mainClose = document.querySelector('.container');
-let trollOpen = document.querySelector(".container2");
+let mainClose = document.querySelector('.container-start');
+let quizOpen = document.querySelector('.container-quiz')
 let executeQuiz = document.querySelector(".btn-start");
 
 executeQuiz.addEventListener("click", function() {
     mainClose.style.display = 'none';
-    trollOpen.style.display = 'flex';
+    quizOpen.style.display = 'flex';
 
 });
 
