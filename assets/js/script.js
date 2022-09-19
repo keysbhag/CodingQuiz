@@ -16,7 +16,7 @@ let mainScreen = function () {
 
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
     infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 3 seconds from the clock. every 5 seconds passed is minus 1 point ";
-    startQuiz.textContent ="Start Quiz";
+    startQuiz.textContent ="Start Quiz!";
     startQuiz.classList.add('btn-start')
 
     mainPrompt.appendChild(gameIntro);
@@ -44,10 +44,11 @@ function countdown() {
             timerEl.removeChild(removePH);
         }
         timeStart--;
-        timeSeconds.textContent = timeStart+" sec";
+        timeSeconds.textContent = timeStart;
         if (timeStart < 0 ){
-            timeSeconds.textContent = '0 sec';
+            timeSeconds.textContent = 0;
             clearInterval(startTimer);
+            enterHighScore();
         }
         else if (sortedDictionaryIndex === questionsDictionary.length) {
             timeSeconds.textContent = timeStart;
