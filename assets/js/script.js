@@ -1,7 +1,12 @@
-let mainClose = document.querySelector('.container-start');
+let mainStartScreen = document.querySelector('.container-start');
 let quizOpen = document.querySelector('.container-quiz')
 let answerButtons = document.querySelectorAll(".answer");
-let questionPrompt = document.querySelector("#question")
+let questionPrompt = document.querySelector("#question");
+let timerEl = document.getElementById('timer');
+let removeTimePlaceHold = document.getElementById('remove-time');
+let gameIntro = document.createElement("h2");
+let infoTag = document.createElement("p");
+let startQuiz = document.createElement("button");
 let sortedDictionary;
 let sortedDictionaryIndex = 0;
 let timerStartClock = 60;
@@ -9,27 +14,21 @@ let timerStartClock = 60;
 let answerAlert = document.querySelector("#alert");
 // ------------------------------
 let mainScreen = function () {
-    let mainPrompt = document.querySelector('.container-start');
-    let gameIntro = document.createElement("h2");
-    let infoTag = document.createElement("p");
-    let startQuiz = document.createElement("button");
 
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
     infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 3 seconds from the clock. GOODLUCK!";
     startQuiz.textContent ="Start Quiz!";
     startQuiz.classList.add('btn-start')
 
-    mainPrompt.appendChild(gameIntro);
-    mainPrompt.appendChild(infoTag);
-    mainPrompt.appendChild(startQuiz);
+    mainStartScreen.appendChild(gameIntro);
+    mainStartScreen.appendChild(infoTag);
+    mainStartScreen.appendChild(startQuiz);
 
     for (let i = 0; i < 2; i++) {
-        mainPrompt.children[i].setAttribute("style", "margin: 20px;")
+        mainStartScreen.children[i].setAttribute("style", "margin: 20px;")
     }
 }
  // --------------------------
-let timerEl = document.getElementById('timer');
-let removePH = document.getElementById('remove-time');
 
 function countdown(timeStart) {
     let timeSeconds = document.createElement("h4");
@@ -40,12 +39,12 @@ function countdown(timeStart) {
 
     let startTimer = setInterval(function() {
         if (timeStart === 60) {
-            timerEl.removeChild(removePH);
+            timerEl.removeChild(removeTimePlaceHold);
         }
         timeStart--;
         timeSeconds.textContent = timeStart;
-        if (answerAlert.innerText == "Incorrect") {
-            timeStart = timeStart - 5;
+        if (answerAlert.innerText == "Incorrect. -5 seconds") {
+            timeStart = timeStart - 4;
         }
         if (timeStart < 0 ){
             timeSeconds.textContent = 0;
@@ -61,19 +60,6 @@ function countdown(timeStart) {
         
     }, 1000);
 }
-
-//--------------------------------
-
-mainScreen();
-
-let executeQuiz = document.querySelector(".btn-start");
-
-executeQuiz.addEventListener("click", function() {
-    mainClose.style.display = 'none';
-    quizOpen.style.display = 'flex';
-    countdown(timerStartClock);
-    loadFirstQuestion();
-});
 
 // ---------------------------------
 function loadFirstQuestion () {
@@ -150,14 +136,10 @@ function wrongAnswerAlert () {
 }
 
 //-------------------------------
-function enterHighScore () {    
-    let gameIntro = document.querySelector("h2");
-    let infoTag = document.querySelector("p");
-    let quizOpen = document.querySelector(".btn-start")
-    
-    mainClose.removeChild(gameIntro);
-    mainClose.removeChild(infoTag);
-    mainClose.removeChild(quizOpen);
+function enterHighScore () {        
+    mainStartScreen.removeChild(gameIntro);
+    mainStartScreen.removeChild(infoTag);
+    mainStartScreen.removeChild(startQuiz);
     // ----------- keep above
     let gameOutro = document.createElement("h2");
     let goodBye = document.createElement("p");
@@ -165,12 +147,26 @@ function enterHighScore () {
     goodBye.textContent = "See you next time ";
 
     quizOpen.style.display = 'none';
-    mainClose.style.display = 'flex';
+    mainStartScreen.style.display = 'flex';
 
-    mainClose.appendChild(gameOutro);
-    mainClose.appendChild(goodBye);
+    mainStartScreen.appendChild(gameOutro);
+    mainStartScreen.appendChild(goodBye);
 
 }
+
+
+//--------------------------------
+
+mainScreen();
+
+let executeQuiz = document.querySelector(".btn-start");
+
+executeQuiz.addEventListener("click", function() {
+    mainStartScreen.style.display = 'none';
+    quizOpen.style.display = 'flex';
+    countdown(timerStartClock);
+    loadFirstQuestion();
+});
 
 // -------------------------------------
 let questionsDictionary = [

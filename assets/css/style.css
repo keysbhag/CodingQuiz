@@ -53,7 +53,7 @@ p{
     display: none;
     flex-direction: column;
     justify-content: center;
-    height: 90vh;
+    height: 80vh;
     margin-left: 200px;
     margin-right: 200px;
 
@@ -76,7 +76,7 @@ p{
     justify-content: center;
     align-items: center;
     margin: 0px 30px;
-    height: 90vh;
+    height: 80vh;
     text-align: center;
 }
 
