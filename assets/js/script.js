@@ -7,14 +7,15 @@ let removeTimePlaceHold = document.getElementById('remove-time');
 let gameIntro = document.createElement("h2");
 let infoTag = document.createElement("p");
 let startQuiz = document.createElement("button");
+startQuiz.classList.add(".btn-start");
 let sortedDictionary;
 let sortedDictionaryIndex = 0;
 let timerStartClock = 60;
 
 let answerAlert = document.querySelector("#alert");
+
 // ------------------------------
 let mainScreen = function () {
-
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
     infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 3 seconds from the clock. GOODLUCK!";
     startQuiz.textContent ="Start Quiz!";
@@ -24,12 +25,11 @@ let mainScreen = function () {
     mainStartScreen.appendChild(infoTag);
     mainStartScreen.appendChild(startQuiz);
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 3; i++) {
         mainStartScreen.children[i].setAttribute("style", "margin: 20px;")
     }
 }
  // --------------------------
-
 function countdown(timeStart) {
     let timeSeconds = document.createElement("h4");
 
@@ -44,7 +44,7 @@ function countdown(timeStart) {
         timeStart--;
         timeSeconds.textContent = timeStart;
         if (answerAlert.innerText == "Incorrect. -5 seconds") {
-            timeStart = timeStart - 4;
+            timeStart = timeStart - 5;
         }
         if (timeStart < 0 ){
             timeSeconds.textContent = 0;
@@ -74,7 +74,6 @@ function loadFirstQuestion () {
 }
 
 // ---------------------------------
-
 function loadOtherQuestions () {
     questionPrompt.innerText = sortedDictionary[sortedDictionaryIndex].question;
     console.log(sortedDictionaryIndex);
@@ -87,7 +86,6 @@ function loadOtherQuestions () {
 }
 
 //------------------------------------
-
 function selectAnswer (event) {
     let selectedButton = event.target;
     console.log(selectedButton);
@@ -105,6 +103,7 @@ function selectAnswer (event) {
     }
 }
 
+//---------------------------------
 function correctAnswerAlert () {
     let time = 1;
     answerAlert.innerText = "Correct";
@@ -120,6 +119,7 @@ function correctAnswerAlert () {
     }, 1000);
 }
 
+//------------------------------------
 function wrongAnswerAlert () {
     let time = 1;
     answerAlert.innerText = "Incorrect. -5 seconds";
@@ -154,14 +154,10 @@ function enterHighScore () {
 
 }
 
-
 //--------------------------------
-
 mainScreen();
 
-let executeQuiz = document.querySelector(".btn-start");
-
-executeQuiz.addEventListener("click", function() {
+startQuiz.addEventListener("click", function() {
     mainStartScreen.style.display = 'none';
     quizOpen.style.display = 'flex';
     countdown(timerStartClock);
