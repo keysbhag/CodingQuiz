@@ -23,7 +23,7 @@ nav{
 
 #main-buttons > * {
     margin-left: 15px;
-    background-color: var(--purpleButtons);
+    background-color: var(--purpleButtons);;
 }
 
 #logo-header{

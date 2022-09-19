@@ -4,7 +4,7 @@ let answerButtons = document.querySelectorAll(".answer");
 let questionPrompt = document.querySelector("#question")
 let sortedDictionary;
 let sortedDictionaryIndex = 0;
-let timeStart;
+let timerStartClock = 60;
 
 let answerAlert = document.querySelector("#alert");
 // ------------------------------
@@ -15,7 +15,7 @@ let mainScreen = function () {
     let startQuiz = document.createElement("button");
 
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
-    infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 3 seconds from the clock. every 5 seconds passed is minus 1 point ";
+    infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 3 seconds from the clock. GOODLUCK!";
     startQuiz.textContent ="Start Quiz!";
     startQuiz.classList.add('btn-start')
 
@@ -31,8 +31,7 @@ let mainScreen = function () {
 let timerEl = document.getElementById('timer');
 let removePH = document.getElementById('remove-time');
 
-function countdown() {
-    let timeStart=60;
+function countdown(timeStart) {
     let timeSeconds = document.createElement("h4");
 
     timeSeconds.classList.add('seconds');
@@ -45,6 +44,9 @@ function countdown() {
         }
         timeStart--;
         timeSeconds.textContent = timeStart;
+        if (answerAlert.innerText == "Incorrect") {
+            timeStart = timeStart - 5;
+        }
         if (timeStart < 0 ){
             timeSeconds.textContent = 0;
             clearInterval(startTimer);
@@ -69,7 +71,7 @@ let executeQuiz = document.querySelector(".btn-start");
 executeQuiz.addEventListener("click", function() {
     mainClose.style.display = 'none';
     quizOpen.style.display = 'flex';
-    countdown();
+    countdown(timerStartClock);
     loadFirstQuestion();
 });
 
@@ -104,11 +106,9 @@ function selectAnswer (event) {
     let selectedButton = event.target;
     console.log(selectedButton);
     if (selectedButton.value === "1"){
-        answerAlert.innerText = "Correct";
-        answerAlert.style.backgroundColor="lightgreen";
+        correctAnswerAlert();
     } else {
-        answerAlert.innerText = "Incorrect";
-        answerAlert.style.backgroundColor="crimson";
+        wrongAnswerAlert();
     }
     sortedDictionaryIndex ++;
     if(sortedDictionaryIndex === questionsDictionary.length) {
@@ -117,6 +117,36 @@ function selectAnswer (event) {
     if (sortedDictionaryIndex < questionsDictionary.length) {
         loadOtherQuestions();
     }
+}
+
+function correctAnswerAlert () {
+    let time = 1;
+    answerAlert.innerText = "Correct";
+    answerAlert.style.backgroundColor="lightgreen";
+    let startTimer = setInterval(function() {
+        time--;
+        if (time === 0){
+            answerAlert.innerText = " ";
+            answerAlert.style.backgroundColor="transparent";
+            clearInterval(startTimer);
+        }
+        
+    }, 1000);
+}
+
+function wrongAnswerAlert () {
+    let time = 1;
+    answerAlert.innerText = "Incorrect. -5 seconds";
+    answerAlert.style.backgroundColor="crimson";
+    let startTimer = setInterval(function() {
+        time--;
+        if (time === 0){
+            answerAlert.innerText = " ";
+            answerAlert.style.backgroundColor="transparent";
+            clearInterval(startTimer);
+        }
+        
+    }, 1000);
 }
 
 //-------------------------------
