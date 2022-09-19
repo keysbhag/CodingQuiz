@@ -118,6 +118,7 @@ function selectAnswer (event) {
     }
 }
 
+//-------------------------------
 function enterHighScore () {    
     let gameIntro = document.querySelector("h2");
     let infoTag = document.querySelector("p");
@@ -140,7 +141,7 @@ function enterHighScore () {
 
 }
 
-
+// -------------------------------------
 let questionsDictionary = [
     {
         question: 'Why did the chicken cross the road?',
