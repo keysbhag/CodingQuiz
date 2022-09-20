@@ -11,6 +11,8 @@ let infoTag = document.createElement("p");
 let startQuiz = document.createElement("button");
 startQuiz.classList.add(".btn-start");
 
+let renderCount=0
+
 let sortedDictionary;
 let sortedDictionaryIndex = 0;
 
@@ -164,8 +166,6 @@ function enterHighScore () {
 
     highScoreScreen.appendChild(finalScore);
 
-    init();
-
     submitScore.addEventListener("click",function(event) {
         event.preventDefault();
 
@@ -187,15 +187,39 @@ function enterHighScore () {
 
 }
 
-function renderHighScores() {
+function renderHighScores(renderCount) {
     let highScores = document.querySelector(".high-score-list");
 
-    for (let i = 0; i < highScoresList.length + 1; i++) {
-        let li = document.createElement("li");
-        li.textContent = highScoresList[i];
-        li.setAttribute = ("data-index", i);
+    if (renderCount !== 0) {
+        let liName = document.createElement("li");
+        let liScore = document.createElement("li");
 
-        highScores.appendChild(li);
+
+        liName.textContent = highScoresList[highScoresList.length -1].name;
+        liScore.textContent = highScoresList[highScoresList.length -1]["score"];
+        liName.setAttribute = ("data-index", highScoresList.length -1 );
+        liScore.setAttribute = ("data-index", highScoresList.length -1);
+
+        highScores.appendChild(liName);
+        highScores.appendChild(liScore);
+
+        return;
+    }
+  
+    renderCount++;
+
+    for (let i = 0; i < highScoresList.length; i++) {
+        let liName = document.createElement("li");
+        let liScore = document.createElement("li");
+
+
+        liName.textContent = highScoresList[i].name;
+        liScore.textContent = highScoresList[i]["score"];
+        liName.setAttribute = ("data-index", i);
+        liScore.setAttribute = ("data-index", i);
+
+        highScores.appendChild(liName);
+        highScores.appendChild(liScore);
     }
 }
 
@@ -211,12 +235,12 @@ function init() {
         highScoresList = storedScores;
     }
 
-    renderHighScores();
+    renderHighScores(renderCount);
 }
 
 //--------------------------------
 mainScreen();
-
+init();
 startQuiz.addEventListener("click", function() {
     mainStartScreen.style.display = 'none';
     quizOpen.style.display = 'flex';

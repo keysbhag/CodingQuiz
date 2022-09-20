@@ -103,6 +103,35 @@ p{
     font-size: 20px;
 }
 
+ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    background-color: white;
+  }
+  
+li {
+    height: 50px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin: 1px;
+    padding: 5px;
+    background-color:  #ca92d1;
+    color: white;
+    font-size: 1.5em;
+    line-height: 1.5;
+    border: 10px black;
+  }
+
+li:nth-child(even){
+    flex-basis: 50%;
+    flex: 1;
+}
+li:nth-child(odd){
+    flex-basis: 50%;
+    flex: 1;
+}
+
 .hide {
     display: none;
 }
