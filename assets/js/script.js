@@ -20,7 +20,8 @@ let scoreCount = 0;
 let updateScore = document.querySelector(".score-count")
 updateScore.textContent = scoreCount;
 
-let highScoresList = [];
+let highScoresList = [ { name: "JV",
+                        score: 0 }];
 
 //------------------------------
 let mainScreen = function () {
@@ -167,7 +168,10 @@ function enterHighScore () {
             enterHighScore();
         }
 
-        highScoresList.push(scoreText);
+        highScoresList.push({
+            name: scoreText,
+            score: scoreCount});
+
         enterScore.value = " ";
 
         storeScore();
