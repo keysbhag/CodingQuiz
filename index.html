@@ -14,7 +14,7 @@
   <header> 
     <nav>
       <div id="main-buttons">
-        <button> Highscores </button>
+        <button class="view-high-scores"> Highscores </button>
         <button onClick="window.location.reload();"> Start Screen </button>
       </div>
       <div id="logo-header">
@@ -34,7 +34,7 @@
   <main class="container-quiz">
     <h3> Score: <strong class="score-count"> </strong></h3>
     <h3 id="alert"> </h3>
-    <h2 id="question-num" > Question X </h2>
+    <h2> Question: <span id="question-num"> </span> </h2>
     <p id="question"> This it the question Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi 
       eius quasi doloremque natus optio, nostrum dolorum laborum eaque quod aut!
     </p>
@@ -45,14 +45,34 @@
   </main>
 
   <div class="container-high-score">
-    <h2> Thanks for playing! </h2>
-    <h3 class="your-score"> </h3>
-    <p> Enter your initials below! </p>
-    <input type="text" name = "high-score" class = "high-score-input">
-    <input type="submit" class = "high-score-enter">
-    <ul class = "high-score-list">
 
-    </ul>
+    <div class="anchor">
+      <h2> Thanks for playing! </h2>
+      <h3 class="your-score"> </h3>
+      <p> Enter your initials below! </p>
+      <input type="text" name = "high-score" class = "high-score-input">
+      <input type="submit" class = "high-score-enter">
+    </div>
+
+    <table class="highscores-table">
+      <thead>
+        <tr>
+          <td>
+            Name
+          </td>
+          <td>
+            Score
+          </td>
+        </tr>
+      </thead>
+      <tbody class="high-score-list">
+
+      </tbody>
+    </table>
+    
+    <!-- <ul class = "high-score-list">
+
+    </ul> -->
   </div>
 
   <script src="./assets/js/script.js"></script>

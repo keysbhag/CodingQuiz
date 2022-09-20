@@ -1,15 +1,18 @@
 let mainStartScreen = document.querySelector('.container-start');
+let viewHighScores = document.querySelector('.view-high-scores');
 let quizOpen = document.querySelector('.container-quiz');
-let highScoreScreen = document.querySelector(".container-high-score");
-let questionPrompt = document.querySelector("#question");
-let answerAlert = document.querySelector("#alert");
+let highScoreScreen = document.querySelector('.container-high-score');
+let questionPrompt = document.querySelector('#question');
+let answerAlert = document.querySelector('#alert');
+let changeQuestionNum = document.querySelector('#question-num');
 let answerButtons = document.querySelectorAll(".answer");
 let timerEl = document.getElementById('timer');
 let removeTimePlaceHold = document.getElementById('remove-time');
-let gameIntro = document.createElement("h2");
-let infoTag = document.createElement("p");
-let startQuiz = document.createElement("button");
-startQuiz.classList.add(".btn-start");
+let gameIntro = document.createElement('h2');
+let infoTag = document.createElement('p');
+let startQuiz = document.createElement('button');
+startQuiz.classList.add('.btn-start');
+let cutDisplay = document.querySelector('.anchor'); //------
 
 let renderCount=0
 
@@ -19,13 +22,15 @@ let sortedDictionaryIndex = 0;
 let timerStartClock = 60;
 
 let scoreCount = 0;
-let updateScore = document.querySelector(".score-count")
+let updateScore = document.querySelector('.score-count')
 updateScore.textContent = scoreCount;
 
-let highScoresList = [ { name: "JV",
-                        score: 0 }];
+let highScoresList = [ { name: "JV", score: 0 }];
 
-console.log(highScoresList);
+let sortedHighScoresList = highScoresList.sort((a,b) => { return b.score - a.score;})
+
+console.log(sortedHighScoresList);
+
 
 //------------------------------
 let mainScreen = function () {
@@ -70,8 +75,6 @@ function countdown(timeStart) {
         else if (sortedDictionaryIndex === questionsDictionary.length) {
             timeSeconds.textContent = timeStart;
             clearInterval(startTimer);
-            let timerResult = document.querySelector(".seconds")
-            console.log(timerResult.innerText);
         }
         
     }, 1000);
@@ -81,9 +84,10 @@ function countdown(timeStart) {
 function loadFirstQuestion () {
     sortedDictionary = questionsDictionary.sort(function(){return 0.5 - Math.random()});
     questionPrompt.innerText = sortedDictionary[sortedDictionaryIndex].question;
+    changeQuestionNum.textContent = (sortedDictionaryIndex + 1);
     let btnTags = document.querySelectorAll(".answer");
     for (let i = 0; i < 4; i++) {
-        btnTags[i].innerText = sortedDictionary[sortedDictionaryIndex].answers[i]["text"];
+        btnTags[i].innerText = sortedDictionary[sortedDictionaryIndex].answers[i]["answer"];
         btnTags[i].value = sortedDictionary[sortedDictionaryIndex].answers[i]["status"];
     }
     btnTags.forEach(item => {item.addEventListener('click',selectAnswer)})
@@ -92,10 +96,10 @@ function loadFirstQuestion () {
 // ---------------------------------
 function loadOtherQuestions () {
     questionPrompt.innerText = sortedDictionary[sortedDictionaryIndex].question;
-    console.log(sortedDictionaryIndex);
+    changeQuestionNum.textContent = (sortedDictionaryIndex + 1);
     let btnTags = document.querySelectorAll(".answer");
     for (let i = 0; i < 4; i++) {
-        btnTags[i].innerText = sortedDictionary[sortedDictionaryIndex].answers[i]["text"];
+        btnTags[i].innerText = sortedDictionary[sortedDictionaryIndex].answers[i]["answer"];
         btnTags[i].value = sortedDictionary[sortedDictionaryIndex].answers[i]["status"];
     }
     btnTags.forEach(item => {item.addEventListener('click',selectAnswer)})
@@ -104,7 +108,7 @@ function loadOtherQuestions () {
 //------------------------------------
 function selectAnswer (event) {
     let selectedButton = event.target;
-    console.log(selectedButton);
+
     if (selectedButton.value === "1"){
         correctAnswerAlert();
         scoreCount = scoreCount + 5;
@@ -168,7 +172,6 @@ function enterHighScore () {
 
     submitScore.addEventListener("click",function(event) {
         event.preventDefault();
-
         let scoreText = enterScore.value.trim();
 
         if (scoreText === " ") {
@@ -180,6 +183,8 @@ function enterHighScore () {
             score: scoreCount});
 
         enterScore.value = " ";
+
+        cutDisplay.style.display= 'none';
         
         storeScore();
         renderHighScores();
@@ -191,41 +196,43 @@ function renderHighScores(renderCount) {
     let highScores = document.querySelector(".high-score-list");
 
     if (renderCount !== 0) {
-        let liName = document.createElement("li");
-        let liScore = document.createElement("li");
+        let newRow = document.createElement('tr');
+        let tdName = document.createElement("td");
+        let tdScore = document.createElement("td");
 
+    
+        tdName.textContent = highScoresList[highScoresList.length -1].name;
+        tdScore.textContent = highScoresList[highScoresList.length -1].score;
+        tdName.setAttribute = ("data-index", highScoresList.length -1 );
+        tdScore.setAttribute = ("data-index", highScoresList.length -1);
 
-        liName.textContent = highScoresList[highScoresList.length -1].name;
-        liScore.textContent = highScoresList[highScoresList.length -1]["score"];
-        liName.setAttribute = ("data-index", highScoresList.length -1 );
-        liScore.setAttribute = ("data-index", highScoresList.length -1);
-
-        highScores.appendChild(liName);
-        highScores.appendChild(liScore);
+        highScores.appendChild(newRow);
+        newRow.appendChild(tdName);
+        newRow.appendChild(tdScore);
 
         return;
     }
   
     renderCount++;
-
     for (let i = 0; i < highScoresList.length; i++) {
-        let liName = document.createElement("li");
-        let liScore = document.createElement("li");
+        let newRow = document.createElement('tr');
+        let tdName = document.createElement("td");
+        let tdScore = document.createElement("td");
 
 
-        liName.textContent = highScoresList[i].name;
-        liScore.textContent = highScoresList[i]["score"];
-        liName.setAttribute = ("data-index", i);
-        liScore.setAttribute = ("data-index", i);
-
-        highScores.appendChild(liName);
-        highScores.appendChild(liScore);
+        tdName.textContent = highScoresList[i].name;
+        tdScore.textContent = highScoresList[i].score;
+        tdName.setAttribute = ("data-index", i);
+        tdScore.setAttribute = ("data-index", i);
+        
+        highScores.appendChild(newRow);
+        newRow.appendChild(tdName);
+        newRow.appendChild(tdScore);
     }
 }
 
 function storeScore() {
     localStorage.setItem("highScoreList", JSON.stringify(highScoresList));
-    console.log("boom");
 }
 
 function init() {
@@ -248,42 +255,50 @@ startQuiz.addEventListener("click", function() {
     loadFirstQuestion();
 });
 
+viewHighScores.addEventListener('click', function() {
+    mainStartScreen.style.display = 'none';
+    quizOpen.style.display = 'none';
+    highScoreScreen.style.display = 'flex';
+    cutDisplay.style.display = 'none';
+});
+
+
 // -------------------------------------
 let questionsDictionary = [
     {
         question: 'Why did the chicken cross the road?',
         answers: [
-          { text: 'to get to the other side', status: 1 },
-          { text: 'to dance', status: 0 },
-          { text: 'to invest in crypto', status: 0 },
-          { text: 'to buy grapes', status: 0 }
+          { answer: 'to get to the other side', status: 1 },
+          { answer: 'to dance', status: 0 },
+          { answer: 'to invest in crypto', status: 0 },
+          { answer: 'to buy grapes', status: 0 }
         ]
       },
       {
         question: 'What is the most important syntax?',
         answers: [
-          { text: 'semi-colon ;', status: 1 },
-          { text: 'variable', status: 0 },
-          { text: 'beep bop', status: 0 },
-          { text: 'if statement', status: 0 }
+          { answer: 'semi-colon ;', status: 1 },
+          { answer: 'variable', status: 0 },
+          { answer: 'beep bop', status: 0 },
+          { answer: 'if statement', status: 0 }
         ]
       },
       {
         question: 'Whats the best programming language?',
         answers: [
-          { text: ' C ', status: 0 },
-          { text: 'Python', status: 0 },
-          { text: 'Java', status: 0 },
-          { text: 'JavaScript', status: 1 }
+          { answer: ' C ', status: 0 },
+          { answer: 'Python', status: 0 },
+          { answer: 'Java', status: 0 },
+          { answer: 'JavaScript', status: 1 }
         ]
       },
       {
         question: 'What is the language that makes pages beautiful',
         answers: [
-          { text: 'Flask', status: 0 },
-          { text: 'HTML', status: 0 },
-          { text: 'CSS', status: 1 },
-          { text: 'Door Dash', status: 0 }
+          { answer: 'Flask', status: 0 },
+          { answer: 'HTML', status: 0 },
+          { answer: 'CSS', status: 1 },
+          { answer: 'Door Dash', status: 0 }
         ]
       }
     ]
