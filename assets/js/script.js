@@ -25,11 +25,8 @@ let scoreCount = 0;
 let updateScore = document.querySelector('.score-count')
 updateScore.textContent = scoreCount;
 
-let highScoresList = [ { name: "JV", score: 0 }];
+let highScoresList = [ { name: "jj", score: "0"}];
 
-let sortedHighScoresList = highScoresList.sort((a,b) => { return b.score - a.score;})
-
-console.log(sortedHighScoresList);
 
 
 //------------------------------
@@ -73,6 +70,11 @@ function countdown(timeStart) {
             enterHighScore();
         }
         else if (sortedDictionaryIndex === questionsDictionary.length) {
+            timeSeconds.textContent = timeStart;
+            clearInterval(startTimer);
+        }
+
+        viewHighScores.onclick = function() {
             timeSeconds.textContent = timeStart;
             clearInterval(startTimer);
         }
@@ -182,29 +184,29 @@ function enterHighScore () {
             name: scoreText,
             score: scoreCount});
 
+        let sortedHighScoresList = highScoresList.sort((a,b) => { return b.score - a.score;})
+
+        highScoresList = sortedHighScoresList;
+
         enterScore.value = " ";
 
         cutDisplay.style.display= 'none';
         
         storeScore();
-        renderHighScores();
+        // renderHighScores();
     });
 
 }
 
 function renderHighScores(renderCount) {
     let highScores = document.querySelector(".high-score-list");
-
     if (renderCount !== 0) {
         let newRow = document.createElement('tr');
         let tdName = document.createElement("td");
         let tdScore = document.createElement("td");
 
-    
         tdName.textContent = highScoresList[highScoresList.length -1].name;
         tdScore.textContent = highScoresList[highScoresList.length -1].score;
-        tdName.setAttribute = ("data-index", highScoresList.length -1 );
-        tdScore.setAttribute = ("data-index", highScoresList.length -1);
 
         highScores.appendChild(newRow);
         newRow.appendChild(tdName);
@@ -219,11 +221,8 @@ function renderHighScores(renderCount) {
         let tdName = document.createElement("td");
         let tdScore = document.createElement("td");
 
-
         tdName.textContent = highScoresList[i].name;
         tdScore.textContent = highScoresList[i].score;
-        tdName.setAttribute = ("data-index", i);
-        tdScore.setAttribute = ("data-index", i);
         
         highScores.appendChild(newRow);
         newRow.appendChild(tdName);
@@ -232,11 +231,11 @@ function renderHighScores(renderCount) {
 }
 
 function storeScore() {
-    localStorage.setItem("highScoreList", JSON.stringify(highScoresList));
+    localStorage.setItem("highScoresList", JSON.stringify(highScoresList));
 }
 
 function init() {
-    let storedScores = JSON.parse(localStorage.getItem("highScoreList"));
+    let storedScores = JSON.parse(localStorage.getItem("highScoresList"));
 
     if (storedScores !== null){
         highScoresList = storedScores;
