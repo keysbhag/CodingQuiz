@@ -23,8 +23,13 @@ updateScore.textContent = scoreCount;
 let highScoresList = [ { name: "JV",
                         score: 0 }];
 
+console.log(highScoresList);
+
 //------------------------------
 let mainScreen = function () {
+    mainStartScreen.style.display = 'flex';
+    highScoreScreen.style.display = 'none';
+
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
     infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 3 seconds from the clock. GOODLUCK!";
     startQuiz.textContent ="Start Quiz!";
@@ -159,6 +164,8 @@ function enterHighScore () {
 
     highScoreScreen.appendChild(finalScore);
 
+    init();
+
     submitScore.addEventListener("click",function(event) {
         event.preventDefault();
 
@@ -173,7 +180,7 @@ function enterHighScore () {
             score: scoreCount});
 
         enterScore.value = " ";
-
+        
         storeScore();
         renderHighScores();
     });
@@ -182,9 +189,8 @@ function enterHighScore () {
 
 function renderHighScores() {
     let highScores = document.querySelector(".high-score-list");
-    mainStartScreen.appendChild(highScores);
 
-    for (let i = 0; i < highScoresList.length; i++) {
+    for (let i = 0; i < highScoresList.length + 1; i++) {
         let li = document.createElement("li");
         li.textContent = highScoresList[i];
         li.setAttribute = ("data-index", i);
@@ -195,10 +201,11 @@ function renderHighScores() {
 
 function storeScore() {
     localStorage.setItem("highScoreList", JSON.stringify(highScoresList));
+    console.log("boom");
 }
 
 function init() {
-    let storedScores = JSON.parse(localStorage.getItem("highScoresList"))
+    let storedScores = JSON.parse(localStorage.getItem("highScoreList"));
 
     if (storedScores !== null){
         highScoresList = storedScores;
@@ -210,7 +217,6 @@ function init() {
 //--------------------------------
 mainScreen();
 
-init();
 startQuiz.addEventListener("click", function() {
     mainStartScreen.style.display = 'none';
     quizOpen.style.display = 'flex';
