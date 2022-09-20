@@ -81,6 +81,20 @@ p{
     text-align: center;
 }
 
+.container-high-score{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 30px;
+    height: 80vh;
+    text-align: center;
+}
+
+.container-high-score > * {
+    margin: 10px;
+}
+
 .btn-start{
     padding: 20px 40px;
     order: 2;

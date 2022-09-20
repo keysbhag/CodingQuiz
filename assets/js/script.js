@@ -1,20 +1,28 @@
 let mainStartScreen = document.querySelector('.container-start');
-let quizOpen = document.querySelector('.container-quiz')
-let answerButtons = document.querySelectorAll(".answer");
+let quizOpen = document.querySelector('.container-quiz');
+let highScoreScreen = document.querySelector(".container-high-score");
 let questionPrompt = document.querySelector("#question");
+let answerAlert = document.querySelector("#alert");
+let answerButtons = document.querySelectorAll(".answer");
 let timerEl = document.getElementById('timer');
 let removeTimePlaceHold = document.getElementById('remove-time');
 let gameIntro = document.createElement("h2");
 let infoTag = document.createElement("p");
 let startQuiz = document.createElement("button");
 startQuiz.classList.add(".btn-start");
+
 let sortedDictionary;
 let sortedDictionaryIndex = 0;
+
 let timerStartClock = 60;
 
-let answerAlert = document.querySelector("#alert");
+let scoreCount = 0;
+let updateScore = document.querySelector(".score-count")
+updateScore.textContent = scoreCount;
 
-// ------------------------------
+let highScoresList = [];
+
+//------------------------------
 let mainScreen = function () {
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
     infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 3 seconds from the clock. GOODLUCK!";
@@ -29,7 +37,7 @@ let mainScreen = function () {
         mainStartScreen.children[i].setAttribute("style", "margin: 20px;")
     }
 }
- // --------------------------
+ //--------------------------
 function countdown(timeStart) {
     let timeSeconds = document.createElement("h4");
 
@@ -91,6 +99,8 @@ function selectAnswer (event) {
     console.log(selectedButton);
     if (selectedButton.value === "1"){
         correctAnswerAlert();
+        scoreCount = scoreCount + 5;
+        updateScore.textContent = scoreCount;
     } else {
         wrongAnswerAlert();
     }
@@ -137,26 +147,66 @@ function wrongAnswerAlert () {
 
 //-------------------------------
 function enterHighScore () {        
-    mainStartScreen.removeChild(gameIntro);
-    mainStartScreen.removeChild(infoTag);
-    mainStartScreen.removeChild(startQuiz);
-    // ----------- keep above
-    let gameOutro = document.createElement("h2");
-    let goodBye = document.createElement("p");
-    gameOutro.textContent = "Thanks for playing!";
-    goodBye.textContent = "See you next time ";
+    let finalScore = document.querySelector(".your-score");
+    let enterScore = document.querySelector(".high-score-input");
+    let submitScore = document.querySelector(".high-score-enter");
+
+    finalScore.textContent = "Final Score: "+scoreCount;
 
     quizOpen.style.display = 'none';
-    mainStartScreen.style.display = 'flex';
+    highScoreScreen.style.display = 'flex';
 
-    mainStartScreen.appendChild(gameOutro);
-    mainStartScreen.appendChild(goodBye);
+    highScoreScreen.appendChild(finalScore);
 
+    submitScore.addEventListener("click",function(event) {
+        event.preventDefault();
+
+        let scoreText = enterScore.value.trim();
+
+        if (scoreText === " ") {
+            enterHighScore();
+        }
+
+        highScoresList.push(scoreText);
+        enterScore.value = " ";
+
+        storeScore();
+        renderHighScores();
+    });
+
+}
+
+function renderHighScores() {
+    let highScores = document.querySelector(".high-score-list");
+    mainStartScreen.appendChild(highScores);
+
+    for (let i = 0; i < highScoresList.length; i++) {
+        let li = document.createElement("li");
+        li.textContent = highScoresList[i];
+        li.setAttribute = ("data-index", i);
+
+        highScores.appendChild(li);
+    }
+}
+
+function storeScore() {
+    localStorage.setItem("highScoreList", JSON.stringify(highScoresList));
+}
+
+function init() {
+    let storedScores = JSON.parse(localStorage.getItem("highScoresList"))
+
+    if (storedScores !== null){
+        highScoresList = storedScores;
+    }
+
+    renderHighScores();
 }
 
 //--------------------------------
 mainScreen();
 
+init();
 startQuiz.addEventListener("click", function() {
     mainStartScreen.style.display = 'none';
     quizOpen.style.display = 'flex';
