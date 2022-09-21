@@ -30,9 +30,9 @@ updateScore.textContent = scoreCount;
 
 let highScoresList = [ ]; // sets a null object to store highScores
 
-// The purpose of this function is to show and populate the main screen
+// The purpose of this function is to show and populate the main screen as well as hide any other screens behind it.
 let mainScreen = function () {
-    // hides the highscore screen and shows the start menu
+    // hides the high score screen and shows the start menu
     mainStartScreen.style.display = 'flex';
     highScoreScreen.style.display = 'none';
 
@@ -110,7 +110,7 @@ function loadOtherQuestions () {
     answerButtons.forEach(item => {item.addEventListener('click',selectAnswer)})
 }
 
-// Selects the button and uses event target to get the value of the button. Depending on the value of the button will give me the the correct prompt 
+// Selects the button and uses event target to get the value of the button. Depending on the value of the button will give me the the correct prompt or the incorrect prompt.  
 function selectAnswer (event) {
     let selectedButton = event.target;
 
@@ -131,7 +131,7 @@ function selectAnswer (event) {
     }
 }
 
-// Pops up an alert for two seconds saying the answer is correct
+// Pops up an alert for two seconds letting the user know the answer is correct
 function correctAnswerAlert () {
     let time = 1;
     answerAlert.innerText = "Correct";
