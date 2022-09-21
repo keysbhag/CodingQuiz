@@ -37,7 +37,7 @@ let mainScreen = function () {
     highScoreScreen.style.display = 'none';
 
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
-    infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 5 seconds from the clock. GOODLUCK!";
+    infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 10 points. Each wrong answer is minus 10 seconds from the clock. GOODLUCK!";
     startQuizBtn.textContent ="Start Quiz!";
     startQuizBtn.classList.add('btn-start')
 
@@ -62,8 +62,8 @@ function countdown() {
         if (timeStart === 60) {
             timerEl.removeChild(removeTimePlaceHold);
         }
-        if (answerAlert.innerText == "Incorrect. -5 seconds") { // Checks if an incorrect prompt pops up, and takes away 5 seconds if it does.
-            timeStart = timeStart - 5; 
+        if (answerAlert.innerText == "Incorrect. -10 seconds") { // Checks if an incorrect prompt pops up, and takes away 5 seconds if it does.
+            timeStart = timeStart - 10; 
         }
         timeStart--;
         timeSeconds.textContent = timeStart;
@@ -87,20 +87,14 @@ function countdown() {
     }, 1000);
 }
 
-// This function randomizes the questions dictionary and then loads values to the corresponding locations so that it appears as a questions with four answer options 
-function loadFirstQuestion () {
+// This function randomizes the questions dictionary and then calls the loadQuestions function 
+function initializeDictionary() {
     sortedDictionary = questionsDictionary.sort(function(){return 0.5 - Math.random()});
-    questionPrompt.innerText = sortedDictionary[sortedDictionaryIndex].question;
-    changeQuestionNum.textContent = (sortedDictionaryIndex + 1);
-    for (let i = 0; i < 4; i++) {
-        answerButtons[i].innerText = sortedDictionary[sortedDictionaryIndex].answers[i]["answer"];
-        answerButtons[i].value = sortedDictionary[sortedDictionaryIndex].answers[i]["status"];
-    }
-    answerButtons.forEach(item => {item.addEventListener('click',selectAnswer)})
+    loadQuestion();
 }
 
-// This function loads any other question after that
-function loadOtherQuestions () {
+// This function loads questions and values to the corresponding locations so that it appears as a question with four answer options 
+function loadQuestion () {
     questionPrompt.innerText = sortedDictionary[sortedDictionaryIndex].question;
     changeQuestionNum.textContent = (sortedDictionaryIndex + 1);
     for (let i = 0; i < 4; i++) {
@@ -116,7 +110,7 @@ function selectAnswer (event) {
 
     if (selectedButton.value === "1"){
         correctAnswerAlert();
-        scoreCount = scoreCount + 5;
+        scoreCount = scoreCount + 10;
         updateScore.textContent = scoreCount;
     }
     else {
@@ -127,7 +121,7 @@ function selectAnswer (event) {
         enterHighScore();
     }
     if (sortedDictionaryIndex < questionsDictionary.length) {
-        loadOtherQuestions();
+        loadQuestion();
     }
 }
 
@@ -150,7 +144,7 @@ function correctAnswerAlert () {
 // Pops up an alert for two seconds saying the answer is incorrect. lets the user know 5 seconds will be deducted.
 function wrongAnswerAlert () {
     let time = 1;
-    answerAlert.innerText = "Incorrect. -5 seconds";
+    answerAlert.innerText = "Incorrect. -10 seconds";
     answerAlert.style.backgroundColor="crimson";
     let startTimer = setInterval(function() {
         time--;
@@ -259,7 +253,7 @@ startQuizBtn.addEventListener("click", function() {
     mainStartScreen.style.display = 'none';
     quizOpen.style.display = 'flex';
     countdown();
-    loadFirstQuestion();
+    initializeDictionary();
 });
 
 viewHighScoresBtn.addEventListener('click', function() {
@@ -307,7 +301,35 @@ let questionsDictionary = [
           { answer: 'CSS', status: 1 },
           { answer: 'Door Dash', status: 0 }
         ]
+      },
+      {
+        question: 'Sal needs to execute a section of code ten times within a program. Compare the selection structures below and select which one meets the needs identified.',
+        answers: [
+          { answer: 'If-Else', status: 0 },
+          { answer: 'Let', status: 0 },
+          { answer: 'For', status: 1 },
+          { answer: 'Function', status: 0 }
+        ]
+      },
+      {
+        question: 'A loop that never ends is referred to as a(n)_________.',
+        answers: [
+          { answer: 'While-loop', status: 0 },
+          { answer: 'Infinite-loop', status: 1 },
+          { answer: 'Recursive loop', status: 0 },
+          { answer: 'Switch-statement', status: 0 }
+        ]
+      },
+      {
+        question: 'How awesome is coding',
+        answers: [
+          { answer: 'Meh', status: 0 },
+          { answer: 'Super Awesome', status: 1 },
+          { answer: 'I hate it', status: 0 },
+          { answer: 'Idk I do not code', status: 0 }
+        ]
       }
+
     ]
 
 
