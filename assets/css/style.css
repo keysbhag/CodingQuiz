@@ -1,12 +1,14 @@
+/* Sets the universal text to the text family below */
 * {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
-
+ /* Declared Colors */
 :root {
     --purpleTheme: rgb(116, 46, 182);
     --purpleButtons: rgb(182, 157, 204);
+    --purpleList: #d7bbdb;
 }
-
+/* Header elements listed below */
 header {
     background-color: var(--purpleTheme);
 }
@@ -30,7 +32,7 @@ nav{
 #logo-header{
     margin-right: 40px;
 }
-
+/* All heading tags are adjusted below */
 h1{
     font-size: 35px;
     align-items: center;
@@ -45,12 +47,33 @@ h3 {
     padding: 20px;
 }
 
-p{
+p{ /* Used for the styling of texts for question prompts and smaller messages */
     font-size: 18px;
     align-items: center;
     line-height: 30px;
 }
 
+/* Container for the start screen. Features listed below as well */
+.container-start{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 30px;
+    height: 80vh;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.btn-start{
+    padding: 20px 40px;
+    order: 2;
+    cursor: pointer;
+    background-color: var(--purpleButtons);
+    font-size: 20px;
+}
+
+/* Container for the quiz. Features are also listed below */
 .container-quiz{
     display: none;
     flex-direction: column;
@@ -58,6 +81,7 @@ p{
     height: 80vh;
     margin-left: 200px;
     margin-right: 200px;
+    margin-bottom: 40px;
 
 }
 
@@ -72,16 +96,7 @@ p{
     background-color: var(--purpleButtons);
 }
 
-.container-start{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0px 30px;
-    height: 80vh;
-    text-align: center;
-}
-
+/* Container for the high score display. Features are also listed below */
 .container-high-score{
     display: none;
     flex-direction: column;
@@ -96,21 +111,13 @@ p{
     margin: 10px;
 }
 
-.btn-start{
-    padding: 20px 40px;
-    order: 2;
-    cursor: pointer;
-    background-color: var(--purpleButtons);
-    font-size: 20px;
-}
-
-.anchor > *{
-    margin-bottom: 20px;
-}
-
-.anchor{ 
+.anchor{  /* This allows for the prompts above the high score list to be removed at our choice */
     display: block;
     width: 100%;
+}
+
+.anchor > *{ 
+    margin-bottom: 20px;
 }
 
 .high-score-enter{
@@ -118,8 +125,7 @@ p{
     padding: 0px 5px;
 }
 
-
-
+/* The style attributes below style the table that the high scores are stored in */
 table {
     background-color: transparent;
     margin-bottom: 1rem;
@@ -134,15 +140,24 @@ table td {
 }
 
 tbody tr:nth-of-type(odd) {
-    background-color: #d7bbdb;
+    background-color: var(--purpleList);
 }
 
-.hide {
-    display: none;
+
+/* Styles the footer border for the page */
+footer {
+    display: block;
+    width: 100%;
+    background-color: var(--purpleTheme);
+    padding: 30px;
 }
 
+/* Lessens the margins for mobile users */
 @media screen and (max-width: 768px) {
     .container-quiz{
         margin: 5px;
+    }
+    h1 {
+        font-size: 25px;
     }
 } 

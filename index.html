@@ -11,11 +11,12 @@
 </head>
 <body>
 
+  <!-- Header with navbar that contains a view high score button, start screen button, logo, and timer -->
   <header> 
     <nav>
       <div id="main-buttons">
         <button class="view-high-scores"> Highscores </button>
-        <button onClick="window.location.reload();"> Start Screen </button>
+        <button class="start-screen-btn" onClick="window.location.reload();"> Start Screen </button>
       </div>
       <div id="logo-header">
         <h1> <code> < 🔑 > </code> </h1>
@@ -27,10 +28,12 @@
     </nav>
   </header>
 
+  <!-- Start container to populate the main start screen -->
   <div class = "container-start">
 
   </div>
 
+  <!-- Quiz container with all the necessary sub-elements for questions and answer buttons -->
   <main class="container-quiz">
     <h3> Score: <strong class="score-count"> </strong></h3>
     <h3 id="alert"> </h3>
@@ -44,8 +47,9 @@
     <button class="answer" value=" "> Answer 4 </button>
   </main>
 
+  <!-- All high score page components are stored below-->
   <div class="container-high-score">
-
+    <!-- Used for the quiz end display and to be easily removed after high score is entered -->
     <div class="anchor">
       <h2> Thanks for playing! </h2>
       <h3 class="your-score"> </h3>
@@ -53,7 +57,8 @@
       <input type="text" name = "high-score" class = "high-score-input">
       <input type="submit" class = "high-score-enter">
     </div>
-
+    
+    <!-- High score table stored below -->
     <table class="highscores-table">
       <thead>
         <tr>
@@ -70,11 +75,13 @@
       </tbody>
     </table>
     
-    <!-- <ul class = "high-score-list">
 
-    </ul> -->
   </div>
 
+  <!-- Empty footer used for styling only -->
+  <footer>
+
+  </footer>
   <script src="./assets/js/script.js"></script>
 </body>
 </html>

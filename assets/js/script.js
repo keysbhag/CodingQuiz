@@ -35,7 +35,8 @@ let mainScreen = function () {
     // hides the high score screen and shows the start menu
     mainStartScreen.style.display = 'flex';
     highScoreScreen.style.display = 'none';
-
+    
+    // populates the main screen with text
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
     infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 10 points. Each wrong answer is minus 10 seconds from the clock. GOODLUCK!";
     startQuizBtn.textContent ="Start Quiz!";
@@ -67,7 +68,7 @@ function countdown() {
         }
         timeStart--;
         timeSeconds.textContent = timeStart;
-        // If the timer falls below 0 the time interval stops and enters the submit highscore page
+        // If the timer falls below 0 the time interval stops and enters the submit high score page
         if (timeStart < 0 ){
             timeSeconds.textContent = 0;
             clearInterval(startTimer);
@@ -95,8 +96,11 @@ function initializeDictionary() {
 
 // This function loads questions and values to the corresponding locations so that it appears as a question with four answer options 
 function loadQuestion () {
+    // puts the question value in the right box
     questionPrompt.innerText = sortedDictionary[sortedDictionaryIndex].question;
+    // Adds a number to the end of every "Question" display
     changeQuestionNum.textContent = (sortedDictionaryIndex + 1);
+    // For loop populates each of the 4 question boxes
     for (let i = 0; i < 4; i++) {
         answerButtons[i].innerText = sortedDictionary[sortedDictionaryIndex].answers[i]["answer"];
         answerButtons[i].value = sortedDictionary[sortedDictionaryIndex].answers[i]["status"];
@@ -104,10 +108,11 @@ function loadQuestion () {
     answerButtons.forEach(item => {item.addEventListener('click',selectAnswer)})
 }
 
-// Selects the button and uses event target to get the value of the button. Depending on the value of the button will give me the the correct prompt or the incorrect prompt.  
+// Selects the button and uses event target to get the value of the button. Depending on the value of the button will give me the the correct prompt or the incorrect prompt.
+// if the correct value is selected you gain 10 points.  
 function selectAnswer (event) {
     let selectedButton = event.target;
-
+    // Correct answers are given a value of 1
     if (selectedButton.value === "1"){
         correctAnswerAlert();
         scoreCount = scoreCount + 10;
@@ -116,16 +121,18 @@ function selectAnswer (event) {
     else {
         wrongAnswerAlert();
     }
+    // increment the index to move to the next question
     sortedDictionaryIndex ++;
+    // if the index value and the length of the dictionary value are the same it means the user has completed the quiz before the timer and the high score screen is loaded
     if(sortedDictionaryIndex === questionsDictionary.length) {
         enterHighScore();
-    }
-    if (sortedDictionaryIndex < questionsDictionary.length) {
+    } 
+    else {
         loadQuestion();
     }
 }
 
-// Pops up an alert for two seconds letting the user know the answer is correct
+// Pops up a nice alert for 1 second letting the user know the answer is correct
 function correctAnswerAlert () {
     let time = 1;
     answerAlert.innerText = "Correct";
@@ -141,7 +148,7 @@ function correctAnswerAlert () {
     }, 1000);
 }
 
-// Pops up an alert for two seconds saying the answer is incorrect. lets the user know 5 seconds will be deducted.
+// Pops up a nice alert for 1 second saying the answer is incorrect. lets the user know 10 seconds will be deducted.
 function wrongAnswerAlert () {
     let time = 1;
     answerAlert.innerText = "Incorrect. -10 seconds";
@@ -157,7 +164,9 @@ function wrongAnswerAlert () {
     }, 1000);
 }
 
-// 
+// This function will fill in the text content for the final score the user has accumulated. It will then prompt the user to
+// enter an initial (or full name) to store with their score in an object. This is then stored in local storage and displayed
+// at the bottom of the screen as a table.
 function enterHighScore () {        
     let finalScore = document.querySelector(".your-score");
     let enterScore = document.querySelector(".high-score-input");
@@ -169,7 +178,7 @@ function enterHighScore () {
     highScoreScreen.style.display = 'flex';
 
     highScoreScreen.appendChild(finalScore);
-
+    // When the submit score button is clicked, the function called will push the score value along with the users initial to be stored in an object.
     submitScore.addEventListener("click",function(event) {
         event.preventDefault();
         let scoreText = enterScore.value.trim();
@@ -182,23 +191,31 @@ function enterHighScore () {
             name: scoreText,
             score: scoreCount});
 
+        // Sorts the object by score in descending order so that you can see the top scores
         let sortedHighScoresList = highScoresList.sort((a,b) => { return b.score - a.score;})
-
         highScoresList = sortedHighScoresList;
-
+        
+        // Clears the input text and hides the submit button and conclusion statement
         enterScore.value = " ";
-
         cutDisplay.style.display= 'none';
         
+        // Stores the scores to the local storage
         storeScore();
+
+        // Re renders the high score list to add the new score to the list
         renderHighScores(1, scoreText, scoreCount);
 
     });
 
 }
 
+// Renders the high scores so that they are listed in a table in the high score display and after the quiz is finished
 function renderHighScores(renderCount,scoreText,scoreCount) {
     let highScores = document.querySelector(".high-score-list");
+    
+    // When the display initializes the first time it uses a for loop to display all stored values.
+    // Any time after that, which is kept track by renderCount, the newly entered score is appended to the list and the
+    // list is reloaded
     if (renderCount > 0) {
         let newRow = document.createElement('tr');
         let tdName = document.createElement("td");
@@ -213,8 +230,9 @@ function renderHighScores(renderCount,scoreText,scoreCount) {
 
         return;
     }
-  
     renderCount++;
+
+    // prints the list the first time
     for (let i = 0; i < highScoresList.length; i++) {
         let newRow = document.createElement('tr');
         let tdName = document.createElement('td');
@@ -230,10 +248,12 @@ function renderHighScores(renderCount,scoreText,scoreCount) {
   
 }
 
+// Stores the object of highScoresList
 function storeScore() {
     localStorage.setItem("highScoresList", JSON.stringify(highScoresList));
 }
 
+// initializes the object of stored scores so it is already displayed
 function init() {
     let storedScores = JSON.parse(localStorage.getItem("highScoresList"));
 
@@ -246,9 +266,12 @@ function init() {
     return storedScores;
 }
 
-//--------------------------------
+// The code below kicks off the program with the mainScreen function, then calls the init function
 mainScreen();
 init();
+
+// Once the Start button is clicked, all the other functions are called for us through out the program. It also takes care
+// of any displays that need to be opened or closed
 startQuizBtn.addEventListener("click", function() {
     mainStartScreen.style.display = 'none';
     quizOpen.style.display = 'flex';
@@ -256,6 +279,8 @@ startQuizBtn.addEventListener("click", function() {
     initializeDictionary();
 });
 
+// If the high scores button is clicked it takes us to a display of the list of high scores. If this button is clicked during a game 
+// the timer also stops.   
 viewHighScoresBtn.addEventListener('click', function() {
     mainStartScreen.style.display = 'none';
     quizOpen.style.display = 'none';
@@ -264,7 +289,7 @@ viewHighScoresBtn.addEventListener('click', function() {
 });
 
 
-// -------------------------------------
+// Stored questions library 
 let questionsDictionary = [
     {
         question: 'The first index of an array is ____.',
@@ -338,7 +363,6 @@ let questionsDictionary = [
           { answer: 'Brendan Eich', status: 1 }
         ]
       }
-
     ]
 
 
