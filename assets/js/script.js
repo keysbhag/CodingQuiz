@@ -18,7 +18,7 @@ let cutDisplay = document.querySelector('.anchor');
 
 let renderCount = 0 // If the storage is already rendered once 
 
-let fakeRender = 0;
+let timeStart = 60; // Starts timer at 60 seconds
 
 let sortedDictionary;  // Randomizes the questions in the questionDictionary object.
 let sortedDictionaryIndex = 0; // Lets me index the next question
@@ -54,7 +54,6 @@ let mainScreen = function () {
 function countdown() {
     // Creates an h4 element to display the time count down
     let timeSeconds = document.createElement("h4");
-    let timeStart = 60; // Starts timer at 60 seconds
     timeSeconds.classList.add('seconds'); 
        timerEl.appendChild(timeSeconds); // Appends it to the timer id
     // 
@@ -62,9 +61,6 @@ function countdown() {
         // Once the timer starts this removes the placeholder
         if (timeStart === 60) {
             timerEl.removeChild(removeTimePlaceHold);
-        }
-        if (answerAlert.innerText == "Incorrect. -10 seconds") { // Checks if an incorrect prompt pops up, and takes away 5 seconds if it does.
-            timeStart = timeStart - 10; 
         }
         timeStart--;
         timeSeconds.textContent = timeStart;
@@ -119,6 +115,7 @@ function selectAnswer (event) {
         updateScore.textContent = scoreCount;
     }
     else {
+        timeStart = timeStart - 10;
         wrongAnswerAlert();
     }
     // increment the index to move to the next question
