@@ -267,12 +267,12 @@ viewHighScoresBtn.addEventListener('click', function() {
 // -------------------------------------
 let questionsDictionary = [
     {
-        question: 'Why did the chicken cross the road?',
+        question: 'The first index of an array is ____.',
         answers: [
-          { answer: 'to get to the other side', status: 1 },
-          { answer: 'to dance', status: 0 },
-          { answer: 'to invest in crypto', status: 0 },
-          { answer: 'to buy grapes', status: 0 }
+          { answer: '0', status: 1 },
+          { answer: '1', status: 0 },
+          { answer: 'custom', status: 0 },
+          { answer: 'the length of the array', status: 0 }
         ]
       },
       {
@@ -327,6 +327,15 @@ let questionsDictionary = [
           { answer: 'Super Awesome', status: 1 },
           { answer: 'I hate it', status: 0 },
           { answer: 'Idk I do not code', status: 0 }
+        ]
+      },
+      {
+        question: 'Who invented JavaScript?',
+        answers: [
+          { answer: 'Teddy D Rosevelt', status: 0 },
+          { answer: 'Brendan Schaub', status: 0 },
+          { answer: 'Frank Reich', status: 0 },
+          { answer: 'Brendan Eich', status: 1 }
         ]
       }
 
