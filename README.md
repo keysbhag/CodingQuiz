@@ -41,7 +41,7 @@ This is the functionality of my quiz app
 
 ## Deployed Application
 
-Check out the live website here: https://keysbhag.github.io/CodingQuiz/
+Check out the live website here! : https://keysbhag.github.io/CodingQuiz/
 
 
 ## Credits
