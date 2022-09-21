@@ -18,6 +18,8 @@ let cutDisplay = document.querySelector('.anchor');
 
 let renderCount = 0 // If the storage is already rendered once 
 
+let fakeRender = 0;
+
 let sortedDictionary;  // Randomizes the questions in the questionDictionary object.
 let sortedDictionaryIndex = 0; // Lets me index the next question
 
@@ -35,7 +37,7 @@ let mainScreen = function () {
     highScoreScreen.style.display = 'none';
 
     gameIntro.textContent = "Welcome to The Ultimate Coding Quiz";
-    infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 3 seconds from the clock. GOODLUCK!";
+    infoTag.textContent = "Answer the multiple choice questions in the correct amount of time. Each right answer is 5 points. Each wrong answer is minus 5 seconds from the clock. GOODLUCK!";
     startQuizBtn.textContent ="Start Quiz!";
     startQuizBtn.classList.add('btn-start')
 
