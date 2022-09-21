@@ -62,7 +62,7 @@ p{ /* Used for the styling of texts for question prompts and smaller messages */
     margin: 0px 30px;
     height: 80vh;
     text-align: center;
-    margin-bottom: 90px;
+    margin-bottom: 100px;
 }
 
 .btn-start{
@@ -81,7 +81,7 @@ p{ /* Used for the styling of texts for question prompts and smaller messages */
     height: 80vh;
     margin-left: 200px;
     margin-right: 200px;
-    margin-bottom: 90px;
+    margin-bottom: 100px;
 
 }
 
